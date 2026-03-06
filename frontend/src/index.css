@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+* { box-sizing: border-box; }
+body {
+  background: #08090a;
+  color: #e5e7eb;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #111214; }
+::-webkit-scrollbar-thumb { background: #1e2025; border-radius: 2px; }
