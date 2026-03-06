@@ -63,34 +63,37 @@ def _signal(value, thresholds: dict) -> str:
 def get_macro_indicators() -> list[dict]:
     indicators = []
 
-    # ISM Manufacturing PMI (>50 = expansion = bullish)
-    ism, ism_prev = _fred_two("NAPM")
+    # Industrial Production Index (manufacturing proxy)
+    indpro, indpro_prev = _fred_two("INDPRO")
+    indpro_chg = None
+    if indpro and indpro_prev:
+        indpro_chg = round(((indpro - indpro_prev) / indpro_prev) * 100, 2)
     indicators.append({
         "id": "ism_manufacturing",
-        "name": "ISM Manufacturing PMI",
+        "name": "Industrial Production (MoM%)",
         "category": "macro",
-        "value": ism,
-        "previous": ism_prev,
-        "unit": "",
-        "signal": _signal(ism, {"bull": 52, "bear": 48}),
-        "description": "Above 50 = expansion. Below 50 = contraction.",
-        "threshold_bull": 52,
-        "threshold_bear": 48,
+        "value": indpro_chg,
+        "previous": None,
+        "unit": "%",
+        "signal": _signal(indpro_chg, {"bull": 0.3, "bear": -0.3}),
+        "description": "Industrial output change. Positive = manufacturing expanding.",
+        "threshold_bull": 0.3,
+        "threshold_bear": -0.3,
     })
 
-    # ISM Services PMI
-    ism_svc, ism_svc_prev = _fred_two("NMFCI")
+    # Consumer Sentiment (services/economy proxy)
+    umcs, umcs_prev = _fred_two("UMCSENT")
     indicators.append({
         "id": "ism_services",
-        "name": "ISM Services PMI",
+        "name": "Consumer Sentiment (UMich)",
         "category": "macro",
-        "value": ism_svc,
-        "previous": ism_svc_prev,
+        "value": umcs,
+        "previous": umcs_prev,
         "unit": "",
-        "signal": _signal(ism_svc, {"bull": 52, "bear": 48}),
-        "description": "Services sector health. Above 50 = growing economy.",
-        "threshold_bull": 52,
-        "threshold_bear": 48,
+        "signal": _signal(umcs, {"bull": 80, "bear": 60}),
+        "description": "Consumer confidence. Above 80 = strong economy. Below 60 = recession fears.",
+        "threshold_bull": 80,
+        "threshold_bear": 60,
     })
 
     # CPI Inflation YoY (low = bullish for stocks)

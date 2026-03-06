@@ -31,4 +31,5 @@ def root():
 
 @app.get("/health")
 def health():
-    return {"status": "healthy"}
+    import os
+    return {"status": "healthy", "has_fred_key": bool(os.environ.get("FRED_API_KEY"))}
