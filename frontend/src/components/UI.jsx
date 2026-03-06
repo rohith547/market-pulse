@@ -1,14 +1,24 @@
+const sectionColors = {
+  "🧠": "from-violet-500 to-purple-500",
+  "🏭": "from-blue-500 to-cyan-500",
+  "💵": "from-amber-500 to-yellow-500",
+  "₿": "from-orange-500 to-amber-500",
+};
+
 export function SectionTitle({ title, emoji, count }) {
+  const gradient = sectionColors[emoji] || "from-gray-400 to-gray-500";
   return (
-    <div className="flex items-center gap-3 mb-4">
-      <span className="text-lg">{emoji}</span>
+    <div className="flex items-center gap-3 mb-5">
+      <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${gradient} flex items-center justify-center text-base shadow-lg`}>
+        {emoji}
+      </div>
       <h2 className="text-sm font-bold text-white uppercase tracking-widest">{title}</h2>
       {count != null && (
-        <span className="text-xs text-gray-600 bg-[#1e2025] px-2 py-0.5 rounded-full">
-          {count} indicators
+        <span className="text-xs text-gray-500 bg-[#1a1c20] border border-[#2a2d35] px-2.5 py-0.5 rounded-full">
+          {count}
         </span>
       )}
-      <div className="flex-1 h-px bg-[#1e2025]" />
+      <div className="flex-1 h-px bg-gradient-to-r from-[#2a2d35] to-transparent" />
     </div>
   );
 }

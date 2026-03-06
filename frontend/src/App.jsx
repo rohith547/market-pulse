@@ -24,7 +24,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#08090a]">
+    <div className="min-h-screen" style={{ background: "radial-gradient(ellipse at top, #0d1117 0%, #08090a 60%)" }}>
       <Header lastUpdated={lastUpdated} onRefresh={handleRefresh} loading={loading} />
       <PriceBar prices={prices.data?.prices} />
 
